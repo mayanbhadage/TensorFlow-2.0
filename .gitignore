@@ -1,0 +1,4 @@
+
+*.ipynb
+Basic/.ipynb_checkpoints/fashion_dataset-checkpoint.py
+.DS_Store
