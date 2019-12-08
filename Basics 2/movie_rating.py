@@ -14,7 +14,7 @@ import numpy as np
 
 data = keras.datasets.imdb
 
-(train_data,train_labels),(test_data,test_labels) = data.load_data(num_words=10000)
+(train_data,train_labels),(test_data,test_labels) = data.load_data(num_words=88000)
 
 
 
@@ -42,10 +42,11 @@ def decode_review(text):
 model = keras.Sequential()
 
 #Embedding Layer : It finds word vectors for  for each word we pass to pass to future layer
-model.add(keras.layers.Embedding(10000,16)) # here we create 10K word vector for every single word 
+model.add(keras.layers.Embedding(88000,16)) # here we create 10K word vector for every single word 
 
 #
 model.add(keras.layers.GlobalAveragePooling1D())
+model.add(keras.layers.Dense(16,activation="relu"))
 model.add(keras.layers.Dense(16,activation="relu"))
 model.add(keras.layers.Dense(1,activation="sigmoid"))
 
@@ -62,14 +63,14 @@ y_train = train_labels[10000:]
 
 fitModel = model.fit(x_train, 
                      y_train,
-                     epochs=40,
+                     epochs=10,
                      batch_size= 512,
                      validation_data= (x_val,y_val ), 
                      verbose=1)
 
 result = model.evaluate(test_data,test_labels)
 
-
+model.save("model.h5")
 
 print(result)
 
